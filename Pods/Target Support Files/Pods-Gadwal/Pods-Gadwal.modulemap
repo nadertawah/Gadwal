@@ -1,0 +1,6 @@
+framework module Pods_Gadwal {
+  umbrella header "Pods-Gadwal-umbrella.h"
+
+  export *
+  module * { export * }
+}
