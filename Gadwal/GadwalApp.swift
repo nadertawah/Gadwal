@@ -21,6 +21,8 @@ struct GadwalApp: App
         {
             LoginRegisterView()
                 .preferredColorScheme(.light)
+                
         }
+        
     }
 }

@@ -24,57 +24,70 @@ struct StudentInfoView: View
         ZStack
         {
             LinearGradient(gradient: Gradient(colors: [.gray,Color.GadwalBGColor,Color.GadwalBGColor]), startPoint: .top, endPoint: .bottom)
-
+                .ignoresSafeArea()
+            
+            
             VStack
             {
                 StepsView(stepsCount: 3, currentStepIndex: 0)
                     .frame(width: 100, height: 20, alignment: .center)
                     .padding(.top)
-                Text("Your current courses state.")
+                Text("Your current courses state")
                     .foregroundColor(.white)
                     .fontWeight(Font.Weight.bold)
-                
-                List
+                GeometryReader
                 {
-                    ForEach( 0..<VM.student.studentCourses.count , id : \.self)
+                    geometry in
+                    
+                    List
                     {
-                        index in
-                        
-                        VStack
+                        ForEach( 0..<VM.student.studentCourses.count , id : \.self)
                         {
-                            HStack
+                            index in
+                            
+                            VStack
                             {
-                                Text(VM.student.studentCourses[index].courseName)
+                                HStack
+                                {
+                                    Text(VM.student.studentCourses[index].courseName)
+                                    
+                                    Spacer()
+                                    
+                                    Text(VM.student.studentCourses[index].courseCode)
+                                }
                                 
                                 Spacer()
                                 
-                                Text(VM.student.studentCourses[index].courseCode)
-                            }
-                            
-                            HStack
-                            {
-                                Toggle("Taken", isOn: $VM.student.studentCourses[index].taken)
-                                    .onChange(of: VM.student.studentCourses[index].taken) { _ in self.isChanged = true}
-                                Spacer(minLength: 20)
+                                HStack
+                                {
+                                    Toggle("Taken", isOn: $VM.student.studentCourses[index].taken)
+                                        .onChange(of: VM.student.studentCourses[index].taken) { _ in self.isChanged = true}
+                                    Spacer(minLength: 20)
+                                    
+                                    Toggle("Passed", isOn: $VM.student.studentCourses[index].passed)
+                                        .opacity(VM.student.studentCourses[index].taken ? 1 : 0)
+                                        .onChange(of: VM.student.studentCourses[index].passed)
+                                    { _ in if(!self.isChanged){self.isChanged = true}}
+                                }
                                 
-                                Toggle("Passed", isOn: $VM.student.studentCourses[index].passed)
-                                    .opacity(VM.student.studentCourses[index].taken ? 1 : 0)
-                                    .onChange(of: VM.student.studentCourses[index].passed)
-                                { _ in if(!self.isChanged){self.isChanged = true}}
+                                
                             }
+                            .padding()
+                           // .background(Color.gray.opacity(0.3))
+                           // .cornerRadius(20)
                         }
                     }
+                    .environment(\.defaultMinListRowHeight, geometry.size.height / 4)
+                    .onAppear()
+                    {
+                        UITableView.appearance().backgroundColor = .clear
+                    }
+                    .onChange(of: $VM.student.studentCourses.count)
+                    {
+                        _ in
+                        isLoading = false
+                    }
                 }
-                .onAppear()
-                {
-                    UITableView.appearance().backgroundColor = .clear
-                }
-                .onChange(of: $VM.student.studentCourses.count)
-                {
-                    _ in
-                    isLoading = false
-                }
-                
                 HStack
                 {
                     Group
@@ -103,7 +116,7 @@ struct StudentInfoView: View
                         .opacity(isChanged ? 1 : 0)
                         .background(isChanged ? .white : Color.GadwalBGColor)
                         .cornerRadius(20)
-
+                        
                         Spacer()
                         
                         Button("Next")
@@ -126,7 +139,7 @@ struct StudentInfoView: View
                     .foregroundColor(.black)
                     
                     
-
+                    
                     NavigationLink("",destination: NavigationLazyView(TableView(VM: TableVM(student: VM.student))), isActive: $isPresentingNext)
                 }
             }
@@ -135,6 +148,7 @@ struct StudentInfoView: View
             {
                 LoadingView()
             }
+            
         }
         .navigationBarHidden(true)
         .onAppear()

@@ -10,8 +10,8 @@ import SwiftUI
 struct StepsView: View
 {
     @State var stepsCount :Int = 3
-    @State var currentStepIndex :Int = 5
-    
+    @State var currentStepIndex :Int = 1
+
     var body: some View
     {
         ZStack
@@ -67,9 +67,11 @@ struct StepsView: View
                 .frame(width: geometry.size.width , height: geometry.size.height, alignment: .center)
             }
         }
+        
+        
     }
 }
-//((geometry.size.width - ((CGFloat(stepsCount) - 1) * 30)) / CGFloat(stepsCount)) - 10
+
 struct StepsView_Previews: PreviewProvider
 {
     static var previews: some View
@@ -77,3 +79,5 @@ struct StepsView_Previews: PreviewProvider
         StepsView()
     }
 }
+
+

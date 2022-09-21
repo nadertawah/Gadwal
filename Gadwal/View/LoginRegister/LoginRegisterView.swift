@@ -37,6 +37,7 @@ struct LoginRegisterView: View
             ZStack
             {
                 LinearGradient(gradient: Gradient(colors: [.gray,Color.GadwalBGColor,Color.GadwalBGColor]), startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
                 
                 GeometryReader
                 {
@@ -53,34 +54,41 @@ struct LoginRegisterView: View
                         
                         if(!isLogin)
                         {
-                            HStack
+                            ZStack(alignment: .leading)
                             {
                                 Image(systemName: "person")
+                                    .padding(.leading)
+                                
                                 TextField("Name", text: $name)
-                                    .padding(5)
-                                    .background(Capsule().fill(Color.gray).opacity(0.1).frame(height: 35, alignment: .center))
+                                    .padding(.leading, 40)
+                                    .background(Capsule().fill(Color.gray).opacity(0.1)
+                                        .frame(height: 35, alignment: .center))
                                     
                             }
                             .transition(.scale)
                             .padding(10)
                         }
                         
-                        HStack
+                        ZStack(alignment: .leading)
                         {
                             Image(systemName: "at")
+                                .padding(.leading)
                             
                             TextField("Email", text: Binding<String>(get: {email}, set: {email = $0.lowercased()}))
-                                .padding(5)
-                                .background(Capsule().fill(Color.gray).opacity(0.1).frame(height: 35, alignment: .center))
+                                .padding(.leading,40)
+                                .background(Capsule().fill(Color.gray).opacity(0.1)
+                                    .frame(height: 35, alignment: .center))
                         }
                         .padding(10)
                         
                         
-                        HStack
+                        ZStack(alignment: .leading)
                         {
                             Image(systemName: "key")
+                                .padding(.leading)
+                            
                             SecureField("Password", text: $password)
-                                .padding(5)
+                                .padding(.leading,40)
                                 .background(Capsule().fill(Color.gray).opacity(0.1).frame(height: 35, alignment: .center))
                         }
                         .padding(10)
@@ -190,7 +198,7 @@ struct LoginRegisterView: View
                     .cornerRadius(100, corners: [.topLeft, .bottomRight])
                     .shadow(color: .black, radius: 10, x: 5, y: 5)
                 }
-                .frame(width: UIScreen.screenWidth * 0.75, height: isLogin ? UIScreen.screenHeight * 0.5 : UIScreen.screenHeight * 0.7, alignment: .center)
+                .frame(width: UIScreen.screenWidth * 0.75, height: isLogin ? UIScreen.screenHeight * 0.45 : UIScreen.screenHeight * 0.65, alignment: .center)
             
                 if isLoading
                 {

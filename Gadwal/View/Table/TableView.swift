@@ -25,6 +25,7 @@ struct TableView: View
         ZStack
         {
             LinearGradient(gradient: Gradient(colors: [.gray,Color.GadwalBGColor,Color.GadwalBGColor]), startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
             
             VStack
             {
@@ -32,7 +33,7 @@ struct TableView: View
                     .frame(width: 100, height: 20, alignment: .center)
                     .padding(.top)
                 
-                Text("Available courses of the semester.")
+                Text("Available courses for the semester")
                     .foregroundColor(.white)
                     .fontWeight(Font.Weight.bold)
                 
@@ -49,18 +50,20 @@ struct TableView: View
                         {
                             HStack
                             {
-                                Text(VM.availableCourses[index].courseName)
-
+                                Text(VM.availableCourses[index].courseCode)
+                                    .font(.system(size: 15))
+                                
                                 Spacer()
 
-                                Text(VM.availableCourses[index].courseCode)
-                                
+                                Text(VM.availableCourses[index].courseName)
+                                    
+
                             }
                             .foregroundColor(color)
                             
                             Spacer()
                             
-                            Text(String(format:"%.2f",VM.availableCourses[index].credits) + " ساعة معتمدة ")
+                            Text(String(format:"%.f",VM.availableCourses[index].credits) + " ساعة معتمدة ")
 
                             Text(VM.availableCourses[index].prof)
                                 
@@ -110,12 +113,15 @@ struct TableView: View
                             HStack
                             {
                                 Text(Helper.getTimeLabelStr(from: VM.availableCourses[index].from, to: VM.availableCourses[index].to))
+                                    .font(.system(size: 15))
 
                                 Spacer()
 
                                 Text(VM.availableCourses[index].day)
                             }
-                        }.foregroundColor(color)
+                        }
+                        .foregroundColor(color)
+                        .padding()
                         
                     }
                 }
@@ -128,46 +134,8 @@ struct TableView: View
                     _ in
                     isLoading = false
                 }
-                
                 .lineLimit(1)
                 .environment(\.defaultMinListRowHeight, 170)
-                .minimumScaleFactor(0.3)
-                
-                Text("متطلبات جامعة")
-                    .foregroundColor(.gray)
-                
-                HStack
-                {
-                    VStack(alignment: .leading)
-                    {
-                        Text("اختياري تخدم التخصص")
-                            .foregroundColor(.color1)
-                        Text("اختياري متطلبات كلية")
-                            .foregroundColor(.color2)
-                        Text("اختيارى " + VM.student.subDepartments[0] )
-                            .foregroundColor(.color3)
-                        Text(VM.student.subDepartments.count > 1 ? "اختيارى " + VM.student.subDepartments[1] : "اختيارى "   )
-                            .foregroundColor(.color4)
-                            .opacity(VM.student.subDepartments.count > 1 ? 1 : 0)
-                    }
-                    
-                    Spacer()
-                    
-                    VStack(alignment: .trailing)
-                    {
-                        Text("اجباري تخدم التخصص")
-                            .foregroundColor(.color5)
-                        Text("اجباري متطلبات كلية")
-                            .foregroundColor(.color6)
-                        Text("اجبارى " + VM.student.subDepartments[0])
-                            .foregroundColor(.color7)
-                        Text(VM.student.subDepartments.count > 1 ? "اجبارى " + VM.student.subDepartments[1] : "اجبارى ")
-                            .foregroundColor(.color8)
-                            .opacity(VM.student.subDepartments.count > 1 ? 1 : 0)
-                    }
-                }
-                .padding(.horizontal)
-                .lineLimit(1)
                 .minimumScaleFactor(0.3)
                 
                 
@@ -198,8 +166,7 @@ struct TableView: View
                     }
                     .foregroundColor(.black)
                     .cornerRadius(20)
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 20)
+                    .padding(20)
 
                     NavigationLink("",destination: NavigationLazyView(SchedulesView(VM: ScheduleVM(availableCourses: VM.availableCourses, schedulesCreditHours: Float(credits)!, student: VM.student))) , isActive: $isPresentingNext)
                 }
@@ -215,6 +182,9 @@ struct TableView: View
             {
                 LoadingView()
             }
+            
+            SideMenu(subDepartments: VM.student.subDepartments)
+                
         }
         .navigationBarHidden(true)
         .onAppear()
@@ -224,6 +194,7 @@ struct TableView: View
                 isLoading = true
             }
         }
+        
     }
 }
 

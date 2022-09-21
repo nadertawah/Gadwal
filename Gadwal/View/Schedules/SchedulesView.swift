@@ -18,6 +18,7 @@ struct SchedulesView: View
         ZStack
         {
             LinearGradient(gradient: Gradient(colors: [.gray,Color.GadwalBGColor,Color.GadwalBGColor]), startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
             
             VStack
             {
@@ -25,7 +26,7 @@ struct SchedulesView: View
                     .frame(width: 100, height: 20, alignment: .center)
                     .padding(.top)
                 
-                Text("Generated schedules.")
+                Text("Generated schedules")
                     .foregroundColor(.white)
                     .fontWeight(Font.Weight.bold)
                 
