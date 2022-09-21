@@ -57,7 +57,6 @@ struct TableView: View
 
                                 Text(VM.availableCourses[index].courseName)
                                     
-
                             }
                             .foregroundColor(color)
                             

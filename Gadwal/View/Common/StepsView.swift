@@ -10,7 +10,7 @@ import SwiftUI
 struct StepsView: View
 {
     @State var stepsCount :Int = 3
-    @State var currentStepIndex :Int = 1
+    @State var currentStepIndex :Int = -1
 
     var body: some View
     {
@@ -67,8 +67,6 @@ struct StepsView: View
                 .frame(width: geometry.size.width , height: geometry.size.height, alignment: .center)
             }
         }
-        
-        
     }
 }
 

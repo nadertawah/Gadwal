@@ -153,23 +153,6 @@ struct SideMenu: View
         .frame(width: sideMenuWidth - 10, alignment: .leading)
         .padding(.leading, 10)
     }
-    
-    var Tips : some View
-    {
-        VStack
-        {
-            Text(
-                """
-                Avoid leaving courses in 'Neutral' state as much as possible to get fast and specific results
-                instead of generating too many combinations that will lead to excessive process overhead.
-                """
-            )
-            .fixedSize(horizontal: false, vertical: true)
-
-            
-        }
-    }
-
 }
 
 

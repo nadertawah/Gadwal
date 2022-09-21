@@ -167,8 +167,6 @@ struct LoginRegisterView: View
                                 alertMessage = "All fields are required!"
                                 isPresentingAlert = true
                             }
-                            
-                            
                         }
                         .frame(width: geometry.size.width * 0.75, height: 35, alignment: .center)
                         .background(Color.GadwalBGColor)

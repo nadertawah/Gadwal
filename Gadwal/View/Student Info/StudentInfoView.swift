@@ -26,7 +26,6 @@ struct StudentInfoView: View
             LinearGradient(gradient: Gradient(colors: [.gray,Color.GadwalBGColor,Color.GadwalBGColor]), startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
             
-            
             VStack
             {
                 StepsView(stepsCount: 3, currentStepIndex: 0)
@@ -49,11 +48,12 @@ struct StudentInfoView: View
                             {
                                 HStack
                                 {
-                                    Text(VM.student.studentCourses[index].courseName)
+                                    Text(VM.student.studentCourses[index].courseCode)
+                                        .font(.system(size: 15))
                                     
                                     Spacer()
                                     
-                                    Text(VM.student.studentCourses[index].courseCode)
+                                    Text(VM.student.studentCourses[index].courseName)
                                 }
                                 
                                 Spacer()
@@ -73,8 +73,6 @@ struct StudentInfoView: View
                                 
                             }
                             .padding()
-                           // .background(Color.gray.opacity(0.3))
-                           // .cornerRadius(20)
                         }
                     }
                     .environment(\.defaultMinListRowHeight, geometry.size.height / 4)
@@ -137,8 +135,6 @@ struct StudentInfoView: View
                         .alert("You must save changes first!", isPresented: $isPresentingAlert){}
                     }
                     .foregroundColor(.black)
-                    
-                    
                     
                     NavigationLink("",destination: NavigationLazyView(TableView(VM: TableVM(student: VM.student))), isActive: $isPresentingNext)
                 }
