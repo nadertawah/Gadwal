@@ -30,7 +30,7 @@ class ScheduleVM : ObservableObject
     var availableCourses = [AvailableCourse]()
     var schedulesCreditHours : Float = 0
     var student:Student = Student(id: "", name: "", department: "", email: "", subDepartments: [], studentCourses: [], courseTypeStatus: [])
-    var currentIndex = 0
+    var currentIndex : Int = -1
     
     //MARK: - intent(s)
     func changeScheduleIndex(isIncreasing:Bool)
@@ -136,6 +136,7 @@ class ScheduleVM : ObservableObject
                 DispatchQueue.main.async
                 {
                     self.currentSchedule = !self.allSchedules.isEmpty ? self.allSchedules[0] : []
+                    self.currentIndex = 0
                 }
             }
             else

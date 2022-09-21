@@ -27,6 +27,13 @@ struct StudentInfoView: View
 
             VStack
             {
+                StepsView(stepsCount: 3, currentStepIndex: 0)
+                    .frame(width: 100, height: 20, alignment: .center)
+                    .padding(.top)
+                Text("Your current courses state.")
+                    .foregroundColor(.white)
+                    .fontWeight(Font.Weight.bold)
+                
                 List
                 {
                     ForEach( 0..<VM.student.studentCourses.count , id : \.self)

@@ -21,6 +21,13 @@ struct SchedulesView: View
             
             VStack
             {
+                StepsView(stepsCount: 3, currentStepIndex: 2)
+                    .frame(width: 100, height: 20, alignment: .center)
+                    .padding(.top)
+                
+                Text("Generated schedules.")
+                    .foregroundColor(.white)
+                    .fontWeight(Font.Weight.bold)
                 
                 List
                 {
@@ -57,7 +64,7 @@ struct SchedulesView: View
                 {
                     UITableView.appearance().backgroundColor = .clear
                 }
-                .onChange(of: $VM.currentSchedule.count)
+                .onChange(of: VM.currentIndex)
                 {
                     _ in
                     isLoading = false
@@ -78,7 +85,7 @@ struct SchedulesView: View
                         
                         Stepper
                         {
-                            Text("\(VM.currentIndex)/\(VM.allSchedules.count-1)")
+                            Text("\(VM.currentIndex)/\(VM.allSchedules.isEmpty ? 0 : VM.allSchedules.count-1)")
                         } onIncrement:
                         {
                             VM.changeScheduleIndex(isIncreasing: true)
