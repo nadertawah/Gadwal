@@ -11,6 +11,7 @@ extension String
 {
     subscript(i: Int) -> String
     {
-        return String(self[index(startIndex, offsetBy: i)])
+        
+        return i < 0 || i >= self.count ? "" : String(self[index(startIndex, offsetBy: i)])
     }
 }

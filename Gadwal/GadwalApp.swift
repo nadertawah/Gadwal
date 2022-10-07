@@ -14,12 +14,15 @@ struct GadwalApp: App
     init()
     {
         FirebaseApp.configure()
+        dbInstance = FireBaseDB()
     }
+    var dbInstance : DBProtocol
+    
     var body: some Scene
     {
         WindowGroup
         {
-            LoginRegisterView()
+            LoginRegisterView(dbInstance: dbInstance)
                 .preferredColorScheme(.light)
                 
         }

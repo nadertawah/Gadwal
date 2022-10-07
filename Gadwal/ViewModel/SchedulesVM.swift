@@ -10,13 +10,10 @@ import SwiftUI
 
 class ScheduleVM : ObservableObject
 {
-    init()
+   
+    init(availableCourses : [AvailableCourse],schedulesCreditHours : Float,student:Student,dbInstance : DBProtocol)
     {
-        
-    }
-    
-    init(availableCourses : [AvailableCourse],schedulesCreditHours : Float,student:Student)
-    {
+        self.dbInstance = dbInstance
         self.availableCourses = availableCourses
         self.schedulesCreditHours = schedulesCreditHours
         self.student = student
@@ -31,7 +28,8 @@ class ScheduleVM : ObservableObject
     var schedulesCreditHours : Float = 0
     var student:Student = Student(id: "", name: "", department: "", email: "", subDepartments: [], studentCourses: [], courseTypeStatus: [])
     var currentIndex : Int = -1
-    
+    var dbInstance : DBProtocol
+
     //MARK: - intent(s)
     func changeScheduleIndex(isIncreasing:Bool)
     {

@@ -10,6 +10,15 @@ import FirebaseAuth
 
 class LoginRegisterVM
 {
+    init(dbInstance : DBProtocol)
+    {
+        self.dbInstance = dbInstance
+    }
+    
+    //MARK: - Var(s)
+    var dbInstance : DBProtocol
+    
+    
     //MARK: - intent(s)
     func login(_ email: String, _ password:String,completion : @escaping (AuthDataResult?, Error?) -> () )
     {
@@ -31,28 +40,29 @@ class LoginRegisterVM
         DispatchQueue.global(qos: .userInteractive).async
         {
             Auth.auth().createUser(withEmail: email, password: password)
-            {
+            { [weak self]
                 result , error  in
+                guard let self = self else {return}
                 if result != nil
                 {
                     let UID = result!.user.uid
                     
-                    FireBaseDB.sharedInstance.getSubDepartments(department: department)
+                    self.dbInstance.getSubDepartments(department: department)
                     {
                         subDepartmentsArr in
                         
-                        FireBaseDB.sharedInstance.getDepartmentCourseTypeStatus(department: department)
+                        self.dbInstance.getDepartmentCourseTypeStatus(department: department)
                         {
                             courseTypeArr in
                             
-                            FireBaseDB.sharedInstance.getDepartmentCourses(department: department)
+                            self.dbInstance.getDepartmentCourses(department: department)
                             {
                                 departmentCoursesArr in
                                 
                                 let student = Student(id: UID, name: name, department: department, email: email, subDepartments: subDepartmentsArr, studentCourses: departmentCoursesArr, courseTypeStatus: courseTypeArr)
                                 
                                 //save to firebase db
-                                FireBaseDB.sharedInstance.setStudent(student)
+                                self.dbInstance.setStudent(student)
                                 
                                 DispatchQueue.main.async
                                 {

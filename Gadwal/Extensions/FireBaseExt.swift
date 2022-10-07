@@ -11,7 +11,7 @@ extension FireBaseDB
 {
     func getSubDepartments(department:String, completion : @escaping ([String])->())
     {
-        FireBaseDB.sharedInstance.DBref.child(Constants.kDEPARTMENTS).child(department).child(Constants.kSUBDEPARTMENTS)
+        DBref.child(Constants.kDEPARTMENTS).child(department).child(Constants.kSUBDEPARTMENTS)
             .observeSingleEvent(of: .value)
         {
             DataSnapshot in
@@ -28,7 +28,7 @@ extension FireBaseDB
     
     func getDepartmentCourses(department:String, completion : @escaping ([Course])->())
     {
-        FireBaseDB.sharedInstance.DBref.child(Constants.kDEPARTMENTS).child(department).child(Constants.kCOURSES)
+        DBref.child(Constants.kDEPARTMENTS).child(department).child(Constants.kCOURSES)
             .observeSingleEvent(of: .value)
         {
             DataSnapshot in
@@ -49,7 +49,7 @@ extension FireBaseDB
     
     func getDepartmentCourseTypeStatus(department:String, completion : @escaping ([CourseType])->())
     {
-        FireBaseDB.sharedInstance.DBref.child(Constants.kDEPARTMENTS).child(department).child(Constants.kCOURSETYPESTATUS)
+        DBref.child(Constants.kDEPARTMENTS).child(department).child(Constants.kCOURSETYPESTATUS)
             .observeSingleEvent(of: .value)
         {
             DataSnapshot in
@@ -68,7 +68,7 @@ extension FireBaseDB
     
     func getStudent(completion : @escaping (Student)->())
     {
-        FireBaseDB.sharedInstance.DBref.child(Constants.kSTUDENTS).child(Helper.getCurrentUserID())
+        DBref.child(Constants.kSTUDENTS).child(Helper.getCurrentUserID())
             .observeSingleEvent(of: .value)
         {
             DataSnapshot in
@@ -79,13 +79,13 @@ extension FireBaseDB
     
     func setStudent(_ student:Student)
     {
-        FireBaseDB.sharedInstance.DBref.child(Constants.kSTUDENTS).child(student.id).setValue(student.studentDictionary)
+        DBref.child(Constants.kSTUDENTS).child(student.id).setValue(student.studentDictionary)
     }
     
     func getAVCourses(department : String,completion : @escaping ([AvailableCourse]) -> ())
     {
         
-        FireBaseDB.sharedInstance.DBref.child(Constants.kDEPARTMENTS).child(department).child(Constants.kAVAILABLECOURSES)
+        DBref.child(Constants.kDEPARTMENTS).child(department).child(Constants.kAVAILABLECOURSES)
             .observeSingleEvent(of: .value)
         {
             DataSnapshot in

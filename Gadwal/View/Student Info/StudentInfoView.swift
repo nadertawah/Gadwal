@@ -17,7 +17,12 @@ struct StudentInfoView: View
     @State private var isPresentingAlert = false
     @State private var isLoading = false
 
-    @ObservedObject private var VM = StudentInfoVM()
+    @ObservedObject var VM : StudentInfoVM
+    
+    init(dbInstance : DBProtocol)
+    {
+        self.VM = StudentInfoVM(dbInstance: dbInstance)
+    }
     
     var body: some View
     {
@@ -136,7 +141,7 @@ struct StudentInfoView: View
                     }
                     .foregroundColor(.black)
                     
-                    NavigationLink("",destination: NavigationLazyView(TableView(VM: TableVM(student: VM.student))), isActive: $isPresentingNext)
+                    NavigationLink("",destination: NavigationLazyView(TableView(student: VM.student, dbInstance: VM.dbInstance)), isActive: $isPresentingNext)
                 }
             }
             
@@ -157,8 +162,3 @@ struct StudentInfoView: View
     }
 }
 
-struct StudentInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        StudentInfoView()
-    }
-}

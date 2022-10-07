@@ -18,7 +18,12 @@ struct TableView: View
     @State private var alertMessage = ""
     @State private var isLoading = false
 
-    @ObservedObject var VM = TableVM(student: Student(id: "", name: "", department: "", email: "", subDepartments: [], studentCourses: [], courseTypeStatus: []))
+    @ObservedObject var VM : TableVM
+    
+    init(student : Student,dbInstance : DBProtocol)
+    {
+        self.VM = TableVM(student: student, dbInstance: dbInstance)
+    }
     
     var body: some View
     {
@@ -167,7 +172,7 @@ struct TableView: View
                     .cornerRadius(20)
                     .padding(20)
 
-                    NavigationLink("",destination: NavigationLazyView(SchedulesView(VM: ScheduleVM(availableCourses: VM.availableCourses, schedulesCreditHours: Float(credits)!, student: VM.student))) , isActive: $isPresentingNext)
+                    NavigationLink("",destination: NavigationLazyView(SchedulesView(availableCourses: VM.availableCourses, schedulesCreditHours: Float(credits)!, student: VM.student,dbInstance:VM.dbInstance)) , isActive: $isPresentingNext)
                 }
             }
             .blur(radius: isPresentingCreditsAlert ? 20 : 0)
@@ -194,13 +199,5 @@ struct TableView: View
             }
         }
         
-    }
-}
-
-struct TableView_Previews: PreviewProvider
-{
-    static var previews: some View
-    {
-        TableView()
     }
 }

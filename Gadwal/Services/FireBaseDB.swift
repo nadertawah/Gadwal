@@ -7,15 +7,13 @@
 
 import FirebaseDatabase
 
-class FireBaseDB
+class FireBaseDB : DBProtocol
 {
-    private init()
+    init()
     {
         let db = Database.database(url: Constants.fireBaseDBUrl)
         db.isPersistenceEnabled = true
         DBref = db.reference()
     }
-    
-    static let sharedInstance = FireBaseDB()
     var DBref  : DatabaseReference
 }

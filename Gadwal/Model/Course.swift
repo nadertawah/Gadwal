@@ -26,7 +26,7 @@ class Course
                             forKeys: [Constants.kCOURSENAME as NSCopying, Constants.kTYPE as NSCopying, Constants.kCREDITS as NSCopying, Constants.kREQUIRED as NSCopying,Constants.kTAKEN as NSCopying,Constants.kPASSED as NSCopying,Constants.kPREREQUISITE as NSCopying,Constants.kSECONDPREREQUISITE as NSCopying,Constants.kTHIRDPREREQUISITE as NSCopying])
     }
     
-    init(courseCode: String = "", courseName : String = "" , type: String = "" , credits: Float = 0, required:Bool = false ,taken:Bool = false, passed:Bool = false)
+    init(courseCode: String , courseName : String  , type: String  , credits: Float = 0, required:Bool = false ,taken:Bool = false, passed:Bool = false)
     {
         self.courseName = courseName
         self.type = type
@@ -45,18 +45,18 @@ class Course
         }
         else {courseCode = ""}
         
-        let courseDict = dictionary[courseCode] as! NSDictionary
+        let courseDict = dictionary[courseCode] as? NSDictionary
         
-        self.courseName = courseDict[Constants.kCOURSENAME] as? String ?? ""
-        self.credits = courseDict[Constants.kCREDITS] as? Float ?? 0
-        self.passed = courseDict[Constants.kPASSED] as? Bool ?? true
-        self.required = courseDict[Constants.kREQUIRED] as? Bool ?? false
-        self.taken = courseDict[Constants.kTAKEN] as? Bool ?? false
-        self.type = courseDict[Constants.kTYPE] as? String ?? ""
+        self.courseName = courseDict?[Constants.kCOURSENAME] as? String ?? ""
+        self.credits = courseDict?[Constants.kCREDITS] as? Float ?? 0
+        self.passed = courseDict?[Constants.kPASSED] as? Bool ?? true
+        self.required = courseDict?[Constants.kREQUIRED] as? Bool ?? false
+        self.taken = courseDict?[Constants.kTAKEN] as? Bool ?? false
+        self.type = courseDict?[Constants.kTYPE] as? String ?? ""
         
-        self.prerequisite = courseDict[Constants.kPREREQUISITE] as? String ?? ""
-        self.secondPrerequisite = courseDict[Constants.kSECONDPREREQUISITE] as? String ?? ""
-        self.thirdPrerequisite = courseDict[Constants.kTHIRDPREREQUISITE] as? String ?? ""
+        self.prerequisite = courseDict?[Constants.kPREREQUISITE] as? String ?? ""
+        self.secondPrerequisite = courseDict?[Constants.kSECONDPREREQUISITE] as? String ?? ""
+        self.thirdPrerequisite = courseDict?[Constants.kTHIRDPREREQUISITE] as? String ?? ""
 
     }
     

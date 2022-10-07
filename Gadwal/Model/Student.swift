@@ -57,18 +57,18 @@ struct Student
         }
         else {self.id = ""}
         
-        let studentDict = dictionary[id] as! NSDictionary
+        let studentDict = dictionary[id] as? NSDictionary
         
-        self.name = studentDict[Constants.kNAME] as? String ?? ""
-        self.credits = studentDict[Constants.kCREDITS] as? Float ?? 0
-        self.department = studentDict[Constants.kDEPARTMENT] as? String ?? ""
-        self.email = studentDict[Constants.kEMAIL] as? String ?? ""
-        self.level = studentDict[Constants.kLEVEL] as? Int16 ?? 1
+        self.name = studentDict?[Constants.kNAME] as? String ?? ""
+        self.credits = studentDict?[Constants.kCREDITS] as? Float ?? 0
+        self.department = studentDict?[Constants.kDEPARTMENT] as? String ?? ""
+        self.email = studentDict?[Constants.kEMAIL] as? String ?? ""
+        self.level = studentDict?[Constants.kLEVEL] as? Int16 ?? 1
 
-        self.subDepartments = studentDict[Constants.kSUBDEPARTMENTS] as? [String] ?? []
+        self.subDepartments = studentDict?[Constants.kSUBDEPARTMENTS] as? [String] ?? []
         
         studentCourses = []
-        if let studentCourses = studentDict[Constants.kSTUDENTCOURSES] as? NSDictionary
+        if let studentCourses = studentDict?[Constants.kSTUDENTCOURSES] as? NSDictionary
         {
             for item in studentCourses
             {
@@ -77,7 +77,7 @@ struct Student
         }
 
         self.courseTypeStatus = []
-        if let courseTypeStatus = studentDict[Constants.kCOURSETYPESTATUS] as? [NSDictionary]
+        if let courseTypeStatus = studentDict?[Constants.kCOURSETYPESTATUS] as? [NSDictionary]
         {
             self.courseTypeStatus = courseTypeStatus.map{CourseType($0)}
         }

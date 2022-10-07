@@ -10,26 +10,27 @@ import FirebaseAuth
 
 class StudentInfoVM : ObservableObject
 {
-    init()
+    init(dbInstance : DBProtocol)
     {
+        self.dbInstance = dbInstance
         getStudent()
     }
     
     //MARK: - Var(s)
-    ///@Published var courses : [Course] = []
     @Published var student = Student(id: "", name: "", department: "", email: "", subDepartments: [], studentCourses: [], courseTypeStatus: [])
-    
+    var dbInstance : DBProtocol
+
     //MARK: - intent(s)
     func saveStudent()
     {
         student.rebuildStats()
-        FireBaseDB.sharedInstance.setStudent(student)
+        dbInstance.setStudent(student)
     }
     
     //MARK: - Helper Funcs
     func getStudent()
     {
-        FireBaseDB.sharedInstance.getStudent
+        dbInstance.getStudent
         {
             [weak self] in
             self?.student = $0

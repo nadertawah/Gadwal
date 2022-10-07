@@ -23,10 +23,11 @@ struct LoginRegisterView: View
     @State private var isLoading = false
     
     private var departments = ["M_CS","P_CS"]
-    private var VM = LoginRegisterVM()
+    var VM : LoginRegisterVM
     
-    init()
+    init(dbInstance : DBProtocol)
     {
+        self.VM = LoginRegisterVM(dbInstance: dbInstance)
         isPresentingNext = Auth.auth().currentUser != nil
     }
     
@@ -203,19 +204,11 @@ struct LoginRegisterView: View
                     LoadingView()
                 }
                 
-                NavigationLink("",destination: NavigationLazyView(StudentInfoView()), isActive: $isPresentingNext)
+                NavigationLink("",destination: NavigationLazyView(StudentInfoView(dbInstance: VM.dbInstance)), isActive: $isPresentingNext)
 
             }
             .navigationBarHidden(true)
         }
         
-    }
-}
-
-struct LoginView_Previews1: PreviewProvider
-{
-    static var previews: some View
-    {
-        LoginRegisterView()
     }
 }

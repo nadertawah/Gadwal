@@ -28,11 +28,10 @@ class AvailableCourse : Course
                 break
             }
         }
-        if(level == 0){return 3}
-        else {return level}
+        return level == 0 ? 3 : level
     }
     
-    init(id : Int,courseCode: String,courseName:String,credit:Float ,from : Float, to : Float, day : String, prof : String, desiredIndex : Int)
+    init(id : Int,courseCode: String,courseName:String,credit:Float ,from : Float, to : Float, day : String, prof : String, desiredIndex : Int,type:String)
     {
         self.from = from
         self.to = to
@@ -40,29 +39,29 @@ class AvailableCourse : Course
         self.prof = prof
         self.desiredIndex = desiredIndex
         self.id = id
-        super.init(courseCode: courseCode, courseName: courseName,credits: credit)
+        super.init(courseCode: courseCode, courseName: courseName, type: type,credits: credit)
     }
     
     override init(_ dictionary : NSDictionary)
     {
         self.id = dictionary.allKeys.first as? Int ?? 0
 
-        let courseDict = dictionary[id] as! NSDictionary
+        let courseDict = dictionary[id] as? NSDictionary
         
-        let courseCode = courseDict.allKeys.first as? String ?? ""
+        let courseCode = courseDict?.allKeys.first as? String ?? ""
 
-        let courseDictValue = courseDict[courseCode] as! NSDictionary
+        let courseDictValue = courseDict?[courseCode] as? NSDictionary
         
         
-        self.from = courseDictValue[Constants.kFROM] as? Float ?? 0
+        self.from = courseDictValue?[Constants.kFROM] as? Float ?? 0
         
-        self.to = courseDictValue[Constants.kTO] as? Float ?? 0
+        self.to = courseDictValue?[Constants.kTO] as? Float ?? 0
         
-        self.day = courseDictValue[Constants.kDAY] as? String ?? ""
+        self.day = courseDictValue?[Constants.kDAY] as? String ?? ""
         
-        self.prof = courseDictValue[Constants.kPROF] as? String ?? ""
+        self.prof = courseDictValue?[Constants.kPROF] as? String ?? ""
 
-        super.init(courseDict)
+        super.init(courseDict ?? ["":""])
     }
     
     
@@ -76,8 +75,8 @@ class AvailableCourse : Course
         if (self.day == second.day && self.day != "غير محدد")
         {
             if (self.from == second.from ||
-                self.from > second.from && self.from < second.to ||
-                second.from > self.from && second.from < self.to) {return true}
+                (self.from > second.from && self.from < second.to) ||
+                (second.from > self.from && second.from < self.to)) {return true}
         }
         return false
     }

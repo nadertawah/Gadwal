@@ -10,9 +10,14 @@ import SwiftUI
 struct SchedulesView: View
 {
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var VM = ScheduleVM()
+    @ObservedObject var VM : ScheduleVM
     @State private var isLoading = false
-
+    
+    init(availableCourses : [AvailableCourse],schedulesCreditHours : Float,student:Student,dbInstance : DBProtocol)
+    {
+        self.VM = ScheduleVM(availableCourses: availableCourses, schedulesCreditHours: schedulesCreditHours, student: student, dbInstance: dbInstance)
+    }
+    
     var body: some View
     {
         ZStack
@@ -118,10 +123,3 @@ struct SchedulesView: View
     }
 }
 
-struct SchedulesView_Previews: PreviewProvider
-{
-    static var previews: some View
-    {
-        SchedulesView()
-    }
-}

@@ -9,13 +9,20 @@ import Foundation
 
 struct GroupCombinationsIndexer
 {
-    var  lengths : [Int], indexes : [Int]
+    private var lengths : [Int]
+    var indexes : [Int]
+    
     init(lengths : [Int])
     {
         self.lengths = lengths
         indexes = [Int]()
-        for _ in 0..<lengths.count
+        for i in 0..<lengths.count
         {
+            if lengths[i] < 0
+            {
+                indexes = [Int]()
+                break
+            }
             indexes.append(0)
         }
     }
